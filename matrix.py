@@ -68,18 +68,38 @@ def print_matrix(matrix):
     """line by line matrix print"""
     for row in matrix:
         print(' '.join(map(str, row)))
+    print('')
 
 
-mat = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-a = activation(mat)
-print_matrix(a)
-print('')
-b = add_bias(mat)
-print_matrix(b)
-print('')
-m = mutate(activation(mat), 0.5)
-print_matrix(m)
-print('')
-mat2 = [[10, 11, 12], [13, 14, 15], [16, 17, 18]]
-c = crossover(mat, mat2)
-print_matrix(c)
+def dot(matrix1, matrix2):
+    """Dot product of matrix1 and matrix 2"""
+    out = [[None for col in matrix2[0]] for row in matrix1]
+    if len(matrix1[0]) == len(matrix2):
+        for i in range(len(matrix1)):
+            for j in range(len(matrix2[0])):
+                s = 0
+                for k in range(len(matrix2)):
+                    s += matrix1[i][k] * matrix2[k][j]
+                out[i][j] = s
+    return out
+
+
+if __name__ == "__main__":
+    mat = [[random.randint(0, 5) for el in range(3)] for row in range(3)]
+    col = [[random.randint(0, 5)] for i in range(4)]
+    row = [[random.randint(0, 5) for i in range(3)]]
+    print('matrix 1 is:')
+    print_matrix(mat)
+    print('col is:')
+    print_matrix(col)
+    a = activation(mat)
+    print_matrix(a)
+    b = add_bias(mat)
+    print_matrix(b)
+    m = mutate(activation(mat), 0.5)
+    print_matrix(m)
+    mat2 = [[random.randint(0, 5) for el in range(3)] for i in range(3)]
+    c = crossover(mat, mat2)
+    print_matrix(c)
+    d = dot(row, mat2)
+    print_matrix(d)
