@@ -1,20 +1,27 @@
 import copy
 import math
 import random
+from typing import List
 
 
-def sigmoid(x):
-    """Sigmoid function"""
+def sigmoid(x: float) -> float:
+    """
+    Sigmoid function
+    """
     return 1 / (1 + math.exp(-x))
 
 
-def der_sigmoid(x):
-    """Sigmoid derivative"""
+def der_sigmoid(x: float) -> float:
+    """
+    Sigmoid function derivative
+    """
     return x * (1 - x)
 
 
-def activation(matrix):
-    """Activation matrix"""
+def activation(matrix: List[List[float]]) -> List[List[float]]:
+    """
+    Activation matrix
+    """
     out = copy.deepcopy(matrix)
     for i, row in enumerate(out):
         for j, el in enumerate(row):
@@ -22,22 +29,27 @@ def activation(matrix):
     return out
 
 
-def der_activation(matrix):
-    """Derived activation matrix"""
+def der_activation(matrix: List[List[float]]) -> List[List[float]]:
+    """
+    Derived activation matrix
+    """
     out = copy.deepcopy(matrix)
     for i, row in enumerate(out):
         for j, el in enumerate(row):
             out[i][j] = der_sigmoid(el)
+    return out
 
 
-def add_bias(matrix):
-    """Adds one row with elements set to 1"""
+def add_bias(matrix: List[List[float]]) -> List[List[float]]:
+    """
+    Adds one row with elements set to 1
+    """
     out = copy.deepcopy(matrix)
     out.append([1 for i in range(len(matrix[0]))])
     return out
 
 
-def mutate(matrix, rate):
+def mutate(matrix: List[List[float]], rate: float) -> List[List[float]]:
     """Mutation function for genetic algorithm"""
     out = copy.deepcopy(matrix)
     # if chosen to be mutated
@@ -52,7 +64,7 @@ def mutate(matrix, rate):
     return out
 
 
-def crossover(matrix1, matrix2):
+def crossover(matrix1: List[List[float]], matrix2: List[List[float]]) -> List[List[float]]:
     """Returns a matrix, which has a random number of values from matrix1 and the rest from matrix2"""
     out = copy.deepcopy(matrix1)
     # pick a random point in the matrix
@@ -64,14 +76,14 @@ def crossover(matrix1, matrix2):
     return out
 
 
-def print_matrix(matrix):
+def print_matrix(matrix: List[List[float]]):
     """line by line matrix print"""
     for row in matrix:
         print(' '.join(map(str, row)))
     print('')
 
 
-def dot(matrix1, matrix2):
+def dot(matrix1: List[List[float]], matrix2: List[List[float]]) -> List[List[float]]:
     """Dot product of matrix1 and matrix 2"""
     out = [[None for col in matrix2[0]] for row in matrix1]
     if len(matrix1[0]) == len(matrix2):
@@ -84,7 +96,12 @@ def dot(matrix1, matrix2):
     return out
 
 
+def col_to_row(matrix: List[List[float]]) -> List[float]:
+    return [el for row in matrix for el in row]
+
+
 if __name__ == "__main__":
+    print('Running matrix module as __main__...')
     mat = [[random.randint(0, 5) for el in range(3)] for row in range(3)]
     col = [[random.randint(0, 5)] for i in range(4)]
     row = [[random.randint(0, 5) for i in range(3)]]
@@ -103,3 +120,4 @@ if __name__ == "__main__":
     print_matrix(c)
     d = dot(row, mat2)
     print_matrix(d)
+    print(col_to_row(col))

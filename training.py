@@ -1,7 +1,7 @@
 import random
 
-import ai
 import board
+import player
 
 
 def error(train_set):
@@ -42,7 +42,7 @@ def random_board(n):
 
 def teach():
     b = board.Board()
-    n = ai.Network()
+    n = player.Network()
     n.load('weights.txt')
     s = -1
     pos = []

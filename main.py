@@ -1,5 +1,5 @@
-from ai import Network
 from board import Board
+from player import Network
 
 print('Hello world!')
 b = Board()
