@@ -60,6 +60,10 @@ class Player:
         """
         return self._side
 
+    @side.setter
+    def side(self, side: int):
+        self._side = side
+
     def mutate(self, mr: int):
         """
 

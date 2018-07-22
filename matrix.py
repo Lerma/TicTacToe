@@ -50,7 +50,9 @@ def add_bias(matrix: List[List[float]]) -> List[List[float]]:
 
 
 def mutate(matrix: List[List[float]], rate: float) -> List[List[float]]:
-    """Mutation function for genetic algorithm"""
+    """
+    Mutation function for genetic algorithm
+    """
     out = copy.deepcopy(matrix)
     # if chosen to be mutated
     if random.random() < rate:
@@ -65,7 +67,9 @@ def mutate(matrix: List[List[float]], rate: float) -> List[List[float]]:
 
 
 def crossover(matrix1: List[List[float]], matrix2: List[List[float]]) -> List[List[float]]:
-    """Returns a matrix, which has a random number of values from matrix1 and the rest from matrix2"""
+    """
+    Returns a matrix, which has a random number of values from matrix1 and the rest from matrix2
+    """
     out = copy.deepcopy(matrix1)
     # pick a random point in the matrix
     (r, c) = (random.randrange(len(matrix1)), random.randrange(len(matrix1[0])))
@@ -77,15 +81,19 @@ def crossover(matrix1: List[List[float]], matrix2: List[List[float]]) -> List[Li
 
 
 def print_matrix(matrix: List[List[float]]):
-    """line by line matrix print"""
+    """
+    line by line matrix print
+    """
     for row in matrix:
         print(' '.join(map(str, row)))
     print('')
 
 
 def dot(matrix1: List[List[float]], matrix2: List[List[float]]) -> List[List[float]]:
-    """Dot product of matrix1 and matrix 2"""
-    out = [[None for col in matrix2[0]] for row in matrix1]
+    """
+    Dot product of matrix1 and matrix2
+    """
+    out = [[0 for col in matrix2[0]] for row in matrix1]
     if len(matrix1[0]) == len(matrix2):
         for i in range(len(matrix1)):
             for j in range(len(matrix2[0])):

@@ -78,11 +78,18 @@ class Board:
             self._winner = -1
         elif [matrix[i][i] for i in range(3)] == [1, 1, 1] or [matrix[3 - 1 - i][i] for i in range(3)] == [1, 1, 1]:
             self._winner = 1
+        # check for draw
+        if all(pos != 0 for pos in self.state) and self.winner == 0:
+            self._game_over = True
+            print('Draw!')
+            return self.game_over
         if self.winner == -1:
+            self._game_over = True
             print('x won!')
         elif self.winner == 1:
+            self._game_over = True
             print('o won!')
-        return self.winner
+        return self.game_over
 
 
 def print_board(board: Board):
