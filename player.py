@@ -66,8 +66,9 @@ class Player:
 
     def mutate(self, mr: int):
         """
+        Mutate player's brain
 
-        :param mr:
+        :param mr: rate
         """
         self.brain.mutate(mr)
 
