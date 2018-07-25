@@ -1,5 +1,8 @@
+from __future__ import annotations
+
 import pickle
 
+from board import print_board
 from neural_network import NeuralNetwork
 
 
@@ -108,9 +111,19 @@ class Player:
                 out.append(j)
             else:
                 out.append(0)
-        print("Player decision is %s" % str(out))
         position = out.index(max(out))
         return position
+
+    def crossover(self, partner: Player) -> Player:
+        child = Player()
+        child._brain = self.brain.crossover(partner.brain)
+        return child
+
+
+class RealPlayer(Player):
+    def make_move(self, board: list) -> int:
+        print_board(board)
+        return int(input("Enter position: "))
 
 
 if __name__ == "__main__":

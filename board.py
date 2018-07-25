@@ -17,7 +17,6 @@ class Board:
         self._state = [0] * 9
         self._game_over = False
         self._winner = 0
-        print('init successful')
 
     @property
     def state(self):
@@ -81,25 +80,23 @@ class Board:
         # check for draw
         if all(pos != 0 for pos in self.state) and self.winner == 0:
             self._game_over = True
-            print('Draw!')
             return self.game_over
+        # set winner
         if self.winner == -1:
             self._game_over = True
-            print('x won!')
         elif self.winner == 1:
             self._game_over = True
-            print('o won!')
         return self.game_over
 
 
-def print_board(board: Board):
+def print_board(board: list):
     """
     Prints board state to console
 
     :param board:
     """
     # first replace list with 'x' and 'o'
-    l = ['x' if el == -1 else 'o' if el == 1 else '_' for el in board.state]
+    l = ['x' if el == -1 else 'o' if el == 1 else '_' for el in board]
     # then split list by 3 and print it
     print('Board:')
     for i in range(0, len(l), 3):
@@ -109,14 +106,14 @@ def print_board(board: Board):
 if __name__ == "__main__":
     print('Running board module as __main__...')
     b = Board()
-    print_board(b)
+    print_board(b.state)
     b.move(-1, 2)
-    print_board(b)
+    print_board(b.state)
     b.move(1, 1)
     b.move(-1, 4)
     b.move(1, 0)
     b.move(-1, 0)
     b.move(-1, -1)
-    print_board(b)
+    print_board(b.state)
     b.move(-1, 6)
-    print_board(b)
+    print_board(b.state)

@@ -4,7 +4,7 @@ import random
 from copy import deepcopy
 from typing import List
 
-from board import Board, print_board
+from board import Board
 from player import Player
 
 
@@ -17,7 +17,6 @@ def ai_play_game(player1: Player, player2: Player):
         move_successful = False
         while not move_successful:
             move_successful = b.move(current_player.side, current_player.make_move(b.state))
-            print_board(b)
             if b.check() and b.winner != 0:
                 current_player.score += 1
                 break
@@ -85,16 +84,22 @@ class Population:
         """
         if player_num > len(self._players) - 1:
             player_num = len(self._players) - 1
-        return sorted(self._players, key=lambda x: player.score)[0:player_num]
+        out = sorted(self._players, key=lambda x: x.score)
+        return out[0:player_num]
 
     def set_best_player(self):
         """
         Set current_best_player and global_best_player (if current best player is better than global best player)
 
         """
-        self._current_best_player = self.select_best_players(1)
+        self._current_best_player = self.select_best_players(1)[0]
         if self.current_best_player.score > self.global_best_player.score:
             self._global_best_player = self.current_best_player
+
+    def train_population(self):
+        for player in self._players:
+            for opponent in self._players:
+                ai_play_game(player, opponent)
 
     def next_generation(self):
         """
@@ -123,17 +128,10 @@ class Population:
 
 if __name__ == "__main__":
     print('Running population as __main__...')
-    print('Test play_game function')
-    p1 = Player(-1)
-    p2 = Player(1)
-    n = 1
-    np = 100
-    j = 0
-    players = [Player(0) for i in range(np)]
-    for game in range(n):
-        for i in range(np):
-            for j in range(np):
-                ai_play_game(players[i], players[j])
-        winners = sorted(players, key=lambda player: player.score)
-    for player in players:
-        print("Player score: %d" % (player.score,))
+    population = Population(20)
+    for i in range(100):
+        population.train_population()
+        print("Generation = %d, global best player score = %d, current best player score = %d" % (
+        population.gen, population.global_best_player.score, population.current_best_player.score))
+        population.next_generation()
+    population.global_best_player.save("trained3")
